@@ -2,10 +2,31 @@
   "compilerOptions": {
     "target": "es2017",                          
     "module": "commonjs", 
-    "allowJs": true,                                            
+    "lib": ["es6"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "allowJs": true,          
+    "removeComments": true,       
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],                     
+    "resolveJsonModule": true,      
     "esModuleInterop": true,                  
     "skipLibCheck": true,                     
-    "forceConsistentCasingInFileNames": true  
+    "forceConsistentCasingInFileNames": true,
+    "pretty": true,
+    "baseUrl": ".",
+    "paths":{
+      "@controllers/*": ["./src/controllers/*"],
+      "@services/*": ["./src/services/*"],
+      "@repositories/*": ["./src/repositories/*"],
+      "@providers/*": ["./src/providers/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+    // "experimentalDecorators": true, //typeORM
+    // "emitDecoratorMetadata": true //typeORM
   },
   "include": [
     "src/**/*.ts"
