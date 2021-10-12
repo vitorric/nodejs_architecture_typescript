@@ -18,15 +18,9 @@
     "pretty": true,
     "baseUrl": ".",
     "paths":{
-      "@controllers/*": ["./src/controllers/*"],
-      "@services/*": ["./src/services/*"],
-      "@repositories/*": ["./src/repositories/*"],
-      "@providers/*": ["./src/providers/*"],
-      "@entities/*": ["./src/entities/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@infra/*": ["./src/infra/*"],
+      "@core/*": ["./src/core/*"]
     }
-    // "experimentalDecorators": true, //typeORM
-    // "emitDecoratorMetadata": true //typeORM
   },
   "include": [
     "src/**/*.ts"

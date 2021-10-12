@@ -3,7 +3,7 @@ import Mail from 'nodemailer/lib/mailer';
 
 import { IMailProvider, IMessage } from '../IMailProvider';
 
-export class MailtrapMailProvider implements IMailProvider {
+export default class MailtrapMailProvider implements IMailProvider {
   private transporter: Mail;
 
   constructor() {

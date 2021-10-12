@@ -1,6 +1,6 @@
-import { User } from '@entities/User';
-import { IMailProvider } from '@providers/IMailProvider';
-import { IUsersRepository } from '@repositories/IUsersRepository';
+import User from '@core/entities/User';
+import { IMailProvider } from '@infra/providers/IMailProvider';
+import { IUsersRepository } from '@infra/repositories/IUsersRepository';
 
 import { ICreateUserRequestDTO } from './IUserServiceDTO';
 
@@ -21,7 +21,7 @@ export class UserService {
 
     const user = new User(data);
 
-    await this.usersRepository.save(user);
+    await this.usersRepository.create(user);
 
     // await this.mailProvider.sendMail({
     //   to: {

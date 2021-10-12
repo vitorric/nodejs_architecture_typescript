@@ -13,12 +13,8 @@ module.exports = {
     plugins: [
         ['module-resolver', {
             alias: {
-                '@controllers': './src/controllers',
-                '@services': './src/services',
-                '@repositories': './src/repositories',
-                '@providers': './src/providers',
-                '@entities': './src/entities',
-                '@utils': './src/utils'
+                '@infra': './src/infra',
+                '@core': './src/core'
             }
         }]
     ],

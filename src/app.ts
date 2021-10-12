@@ -3,7 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
 
-import routes from './routes';
+import routes from '@infra/http/routes';
 
 const app = express();
 
