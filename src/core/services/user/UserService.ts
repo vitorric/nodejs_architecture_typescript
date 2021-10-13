@@ -2,6 +2,7 @@ import User from '@core/entities/User';
 import { IMailProvider } from '@infra/providers/IMailProvider';
 import { IUsersRepository } from '@infra/repositories/IUsersRepository';
 
+import { ServiceResponse, serviceResponse } from '../ServiceResponse';
 import { ICreateUserRequestDTO } from './IUserServiceDTO';
 
 export class UserService {
@@ -10,10 +11,8 @@ export class UserService {
     private mailProvider: IMailProvider
   ) {}
 
-  async create(data: ICreateUserRequestDTO): Promise<User> {
-    const userAlreadyExists = await this.usersRepository.findByEmail(
-      data.email
-    );
+  async create(data: ICreateUserRequestDTO): Promise<ServiceResponse> {
+    const userAlreadyExists = await this.usersRepository.exists(data.email);
 
     if (userAlreadyExists) {
       throw new Error('User already exists.');
@@ -21,7 +20,7 @@ export class UserService {
 
     const user = new User(data);
 
-    await this.usersRepository.create(user);
+    await this.usersRepository.create(new User(data));
 
     // await this.mailProvider.sendMail({
     //   to: {
@@ -37,5 +36,9 @@ export class UserService {
     // })
 
     return user;
+  }
+
+  async get(id: string): Promise<ServiceResponse> {
+    return serviceResponse({ id });
   }
 }

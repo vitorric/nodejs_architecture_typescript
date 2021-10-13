@@ -11,4 +11,9 @@ const ResJson = (
   payload: any
 ): any => res.status(code).jsonp({ success, payload });
 
+// const ResJson = (res: Response, httpResponse: HttpResponse): any =>
+//   res
+//     .status(httpResponse.statusCode)
+//     .jsonp({ success: httpResponse.success, payload: httpResponse.body });
+
 export { GetMD5, ResJson };

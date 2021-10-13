@@ -9,4 +9,8 @@ router.post('/create', (request, response) =>
   userController.create(request, response)
 );
 
+router.get('/get/:id', (request, response) =>
+  userController.get(request, response)
+);
+
 export default router;

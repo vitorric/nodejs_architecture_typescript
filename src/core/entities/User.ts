@@ -15,7 +15,7 @@ export default class User {
 
   public password: string;
 
-  public role: Roles;
+  public role: string;
 
   public createdAt?: Date;
 

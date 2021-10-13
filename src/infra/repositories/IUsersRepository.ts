@@ -1,6 +1,7 @@
 import User from '@core/entities/User';
 
 export interface IUsersRepository {
-  findByEmail(email: string): Promise<User>;
+  exists(email: string): Promise<boolean>;
   create(user: User): Promise<void>;
+  findById(id: string): Promise<User>;
 }
