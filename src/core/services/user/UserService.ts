@@ -1,8 +1,13 @@
+import {
+  ControllerResponse,
+  ok,
+  created,
+  conflict,
+} from '@core/controllers/ControllerResponse';
 import User from '@core/entities/User';
 import { IMailProvider } from '@infra/providers/IMailProvider';
 import { IUsersRepository } from '@infra/repositories/IUsersRepository';
 
-import { ServiceResponse, serviceResponse } from '../ServiceResponse';
 import { ICreateUserRequestDTO } from './IUserServiceDTO';
 
 export class UserService {
@@ -11,14 +16,12 @@ export class UserService {
     private mailProvider: IMailProvider
   ) {}
 
-  async create(data: ICreateUserRequestDTO): Promise<ServiceResponse> {
+  async create(data: ICreateUserRequestDTO): Promise<ControllerResponse> {
     const userAlreadyExists = await this.usersRepository.exists(data.email);
 
     if (userAlreadyExists) {
-      throw new Error('User already exists.');
+      return conflict(new Error('User already exists.'));
     }
-
-    const user = new User(data);
 
     await this.usersRepository.create(new User(data));
 
@@ -35,10 +38,10 @@ export class UserService {
     //   body: '<p>Você já pode fazer login em nossa plataforma.</p>'
     // })
 
-    return user;
+    return created();
   }
 
-  async get(id: string): Promise<ServiceResponse> {
-    return serviceResponse({ id });
+  async get(id: string): Promise<ControllerResponse> {
+    return ok({ id });
   }
 }

@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
-
 import { UserService } from '@core/services/user/UserService';
-import { ResJson } from '@core/utils/index';
 import MailtrapMailProvider from '@infra/providers/implementations/MailtrapMailProvider';
 import PrismaUsersRepository from '@infra/repositories/prisma/user';
+
+import { ControllerResponse } from '../ControllerResponse';
+import IUserController from './IUserController';
 
 const prismaUsersRepository = new PrismaUsersRepository();
 const mailtrapMailProvider = new MailtrapMailProvider();
@@ -13,27 +13,13 @@ const userService = new UserService(
   mailtrapMailProvider
 );
 
-export default class UserController {
-  async create(request: Request, response: Response): Promise<Response> {
-    try {
-      return ResJson(
-        response,
-        201,
-        true,
-        await userService.create({ ...request.body })
-      );
-    } catch (err) {
-      return ResJson(response, 400, false, err.message || 'Unexpected error.');
-    }
+export default class UserController implements IUserController {
+  async create(event: any): Promise<ControllerResponse> {
+    return userService.create({ ...event.body });
   }
 
-  async get(request: Request, response: Response): Promise<Response> {
-    try {
-      const { id } = request.params;
-
-      return ResJson(response, 200, true, await userService.get(id));
-    } catch (err) {
-      return ResJson(response, 400, false, err.message || 'Unexpected error.');
-    }
+  async get(event: any): Promise<ControllerResponse> {
+    const { id } = event.params;
+    return userService.get(id);
   }
 }
