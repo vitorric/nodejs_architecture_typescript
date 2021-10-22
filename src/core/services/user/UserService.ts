@@ -1,4 +1,4 @@
-import { IUsersRepository } from '@infra/db/IUserRepository';
+import { IUserRepository } from '@infra/db/IUserRepository';
 import { IMailProvider } from '@infra/providers/IMailProvider';
 
 import {
@@ -13,7 +13,7 @@ import { ICreateUserRequestDTO } from './IUserServiceDTO';
 
 export class UserService {
   constructor(
-    private usersRepository: IUsersRepository,
+    private usersRepository: IUserRepository,
     private mailProvider: IMailProvider
   ) {}
 

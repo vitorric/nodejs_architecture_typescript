@@ -1,4 +1,6 @@
-import { Schema, Document } from 'mongoose';
+import { Schema, Document, Types } from 'mongoose';
+
+import Company from '@core/entities/Company';
 
 import conn from '../connection';
 
@@ -7,15 +9,21 @@ export type UserDocument = Document & {
   email: string;
   password: string;
   role: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  status: boolean;
+  deleted: boolean;
+  firstAccessDone: boolean;
+  emailValidated: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+
+  companyId?: string;
+  Company?: Company;
 };
 
 const UserSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
@@ -31,11 +39,23 @@ const UserSchema = new Schema(
       enum: ['Admin'],
       required: true,
     },
+    companyId: {
+      type: Types.ObjectId,
+      ref: 'Company',
+    },
+    firstAccessDone: {
+      type: Boolean,
+      default: 0,
+    },
+    emailValidated: {
+      type: Boolean,
+      default: 0,
+    },
     status: {
       type: Boolean,
       default: 1,
     },
-    delete: {
+    deleted: {
       type: Boolean,
       default: 0,
     },

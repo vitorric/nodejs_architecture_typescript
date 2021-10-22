@@ -1,15 +1,31 @@
-import User from '../../../../core/entities/User';
-import { IUsersRepository } from '../../IUserRepository';
-import schema from '../schemas/userSchema';
+import User from '@core/entities/User';
 
-export default class UsersRepository implements IUsersRepository {
+import { IUserRepository } from '../../IUserRepository';
+import schema from '../schemas/userSchema';
+import { ObjectIdCast } from '../utils';
+
+export default class UserRepository implements IUserRepository {
   async exists(email: string): Promise<boolean> {
     const user = await schema.findOne({ email }).exec();
     return !!user;
   }
 
-  async create(user: User): Promise<void> {
-    await schema.create(user);
+  async create(user: User): Promise<User> {
+    return (await schema.create(user)) as User;
+  }
+
+  async update(userId: string, user: User): Promise<boolean> {
+    schema.updateOne(
+      {
+        _id: ObjectIdCast(userId),
+      },
+      {
+        $set: {
+          ...user,
+        },
+      }
+    );
+    return true;
   }
 
   async findById(userId: string): Promise<User> {
