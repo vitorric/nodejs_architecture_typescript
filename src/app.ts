@@ -1,13 +1,15 @@
+/* eslint-disable import/first */
 import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
 
+dotenv.config({ path: path.resolve(`.env.${process.env.NODE_ENV}`) });
+
 import routes from '@infra/http/routes';
 
 const app = express();
 
-dotenv.config({ path: path.resolve(`.env.${process.env.NODE_ENV}`) });
 // import { PassportMiddleware } from './middlewares/passport'
 
 app.all('*', (req, res, next) => {

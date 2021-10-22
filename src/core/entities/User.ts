@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 export enum Roles {
   Admin = 'Admin',
 }
@@ -7,7 +5,7 @@ export enum Roles {
 export default class User {
   static readonly Roles = Roles;
 
-  public readonly id: string;
+  public readonly _id: any;
 
   public name: string;
 
@@ -21,11 +19,7 @@ export default class User {
 
   public updatedAt?: Date;
 
-  constructor(props: Omit<User, 'id'>, id?: string) {
+  constructor(props: Omit<User, '_id'>) {
     Object.assign(this, props);
-
-    if (!id) {
-      this.id = uuid();
-    }
   }
 }

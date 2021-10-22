@@ -1,13 +1,14 @@
+import { IUsersRepository } from '@infra/db/IUserRepository';
+import { IMailProvider } from '@infra/providers/IMailProvider';
+
 import {
   ControllerResponse,
   ok,
   created,
   conflict,
-} from '@core/controllers/ControllerResponse';
-import User from '@core/entities/User';
-import { IMailProvider } from '@infra/providers/IMailProvider';
-import { IUsersRepository } from '@infra/repositories/IUsersRepository';
-
+  badRequest,
+} from '../../controllers/ControllerResponse';
+import User from '../../entities/User';
 import { ICreateUserRequestDTO } from './IUserServiceDTO';
 
 export class UserService {
@@ -41,7 +42,13 @@ export class UserService {
     return created();
   }
 
-  async get(id: string): Promise<ControllerResponse> {
-    return ok({ id });
+  async get(userId: string): Promise<ControllerResponse> {
+    try {
+      const user = await this.usersRepository.findById(userId);
+      return ok(user);
+    } catch (err) {
+      console.log(err);
+      return badRequest(new Error('Invalid Params.'));
+    }
   }
 }

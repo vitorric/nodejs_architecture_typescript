@@ -10,9 +10,9 @@
     "docker-build": "docker-compose --env-file .env.dev build"
   },
   "dependencies": {
-    "@prisma/client": "^3.2.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
     "nodemailer": "^6.6.5",
     "uuid": "^8.3.2"
@@ -25,6 +25,7 @@
     "@babel/preset-typescript": "^7.15.0",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
+    "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.10.3",
     "@types/nodemailer": "^6.4.4",
@@ -40,9 +41,7 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-import-helpers": "^1.1.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "pg": "^8.7.1",
     "prettier": "^2.4.1",
-    "prisma": "^3.2.1",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.11.0",
     "typescript": "^4.4.3"
