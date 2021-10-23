@@ -4,11 +4,11 @@ import Company from './Company';
 export default class BillingRule {
   public readonly _id: any;
 
-  public name: string;
+  public name?: string;
 
-  public sendEmail: boolean;
+  public sendEmail?: boolean;
 
-  public applyTo: EnumBankFunctions;
+  public applyTo?: EnumBankFunctions;
 
   public status?: boolean;
 

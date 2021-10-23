@@ -9,8 +9,8 @@ export default class BankRepository implements IBankRepository {
     return (await schema.create(bank)) as Bank;
   }
 
-  async update(bankId: string, bank: Bank): Promise<boolean> {
-    schema.updateOne(
+  async update(bankId: any, bank: Bank): Promise<boolean> {
+    await schema.updateOne(
       {
         _id: ObjectIdCast(bankId),
       },

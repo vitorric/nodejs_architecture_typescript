@@ -14,8 +14,8 @@ export default class UserRepository implements IUserRepository {
     return (await schema.create(user)) as User;
   }
 
-  async update(userId: string, user: User): Promise<boolean> {
-    schema.updateOne(
+  async update(userId: any, user: User): Promise<boolean> {
+    await schema.updateOne(
       {
         _id: ObjectIdCast(userId),
       },

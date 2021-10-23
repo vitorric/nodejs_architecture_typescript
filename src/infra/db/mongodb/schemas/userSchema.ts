@@ -16,7 +16,7 @@ export type UserDocument = Document & {
   createdAt: Date;
   updatedAt: Date;
 
-  companyId?: string;
+  companyId?: any;
   Company?: Company;
 };
 

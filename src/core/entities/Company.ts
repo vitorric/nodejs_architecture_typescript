@@ -4,9 +4,9 @@ import User from './User';
 export default class Company {
   public readonly _id: any;
 
-  public name: string;
+  public name?: string;
 
-  public cnpj: string;
+  public cnpj?: string;
 
   public onboarding?: boolean;
 

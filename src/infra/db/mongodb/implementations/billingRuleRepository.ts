@@ -9,11 +9,8 @@ export default class BillingRuleRepository implements IBillingRuleRepository {
     return (await schema.create(billingRule)) as BillingRule;
   }
 
-  async update(
-    billingRuleId: string,
-    billingRule: BillingRule
-  ): Promise<boolean> {
-    schema.updateOne(
+  async update(billingRuleId: any, billingRule: BillingRule): Promise<boolean> {
+    await schema.updateOne(
       {
         _id: ObjectIdCast(billingRuleId),
       },

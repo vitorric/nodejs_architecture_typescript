@@ -14,8 +14,8 @@ export default class CompanyRepository implements ICompanyRepository {
     return (await schema.create(company)) as Company;
   }
 
-  async update(companyId: string, company: Company): Promise<boolean> {
-    schema.updateOne(
+  async update(companyId: any, company: Company): Promise<boolean> {
+    await schema.updateOne(
       {
         _id: ObjectIdCast(companyId),
       },

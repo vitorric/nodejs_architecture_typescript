@@ -11,11 +11,11 @@ export default class User {
 
   public name?: string;
 
-  public email: string;
+  public email?: string;
 
-  public password: string;
+  public password?: string;
 
-  public role: string;
+  public role?: string;
 
   public firstAccessDone?: boolean;
 

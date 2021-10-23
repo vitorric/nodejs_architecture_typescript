@@ -15,7 +15,7 @@ export type CompanyDocument = Document & {
   updatedAt: Date;
 
   // Relations
-  userId?: string;
+  userId?: any;
   User?: User;
 
   banksId?: [any];
@@ -35,7 +35,6 @@ const CompanySchema = new Schema(
     cnpj: {
       type: String,
       required: true,
-      unique: true,
     },
     userId: {
       type: Types.ObjectId,

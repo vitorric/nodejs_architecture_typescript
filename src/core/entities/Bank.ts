@@ -13,9 +13,9 @@ export type BankFunctions = {
 export default class Bank {
   public readonly _id: any;
 
-  public name: string;
+  public name?: string;
 
-  public bankFunctions: [BankFunctions];
+  public bankFunctions?: [BankFunctions];
 
   public status?: boolean;
 
