@@ -18,15 +18,15 @@ const jwtProvider = new JWTProvider();
 const emailService = new EmailService(mailtrapMailProvider);
 const userService = new UserService(userRepository);
 
-const companyService = new CompanyService(
-  jwtProvider,
-  companyRepository,
-  userService,
-  emailService
-);
+const companyService = new CompanyService(companyRepository);
 
 export default class CompanyController implements ICompanyController {
   async create(event: any): Promise<ControllerResponse> {
-    return companyService.create({ ...event.body });
+    return companyService.create(
+      { ...event.body },
+      jwtProvider,
+      userService,
+      emailService
+    );
   }
 }

@@ -9,21 +9,20 @@ import User from '@core/entities/User';
 import { EmailService } from '@core/services/email/EmailService';
 import { UserService } from '@core/services/user/UserService';
 import { CnpjValidation } from '@core/utils';
-import { decrypt } from '@core/utils/crypto';
 import { ICompanyRepository } from '@infra/db/ICompanyRepository';
 import { IJWTProvider } from '@infra/providers/IJWTProvider';
 
 import { ICreateCompanyRequestDTO } from './ICompanyServiceDTO';
 
 export class CompanyService {
-  constructor(
-    private jwt: IJWTProvider,
-    private companyRepository: ICompanyRepository,
-    private userService: UserService,
-    private emailService: EmailService
-  ) {}
+  constructor(private companyRepository: ICompanyRepository) {}
 
-  async create(data: ICreateCompanyRequestDTO): Promise<ControllerResponse> {
+  async create(
+    data: ICreateCompanyRequestDTO,
+    jwt: IJWTProvider,
+    userService: UserService,
+    emailService: EmailService
+  ): Promise<ControllerResponse> {
     try {
       if (!CnpjValidation(data.cnpj)) {
         return badRequest(new Error('Invalid Params.'));
@@ -37,7 +36,7 @@ export class CompanyService {
         return conflict(new Error('CNPJ company already exists.'));
       }
 
-      if (await this.userService.userExists(data.userEmail)) {
+      if (await userService.userExists(data.userEmail)) {
         return conflict(new Error('Email user already exists.'));
       }
 
@@ -45,7 +44,7 @@ export class CompanyService {
         new Company(data)
       );
 
-      const user: User = await this.userService.create({
+      const user: User = await userService.create({
         companyId: company._id,
         email: data.userEmail,
         role: User.Roles.Admin,
@@ -56,22 +55,12 @@ export class CompanyService {
         userId: user._id,
       });
 
-      const jwtConfirm = this.jwt.create(
-        {
-          companyId: company._id,
-          userId: user._id,
-        },
-        10
+      userService.sendEmailConfirmFirstAccessDone(
+        user,
+        jwt,
+        this.companyRepository,
+        emailService
       );
-
-      this.emailService.sendEmailConfirmCompanyUser({
-        to: {
-          email: data.userEmail,
-          name: company.name,
-        },
-        confirmLink: `${process.env.URL_PORTAL}/auth/confirm/${jwtConfirm}`,
-        tmpPassword: decrypt(user.password),
-      });
 
       return ok(company);
     } catch (err) {

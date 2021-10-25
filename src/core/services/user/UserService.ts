@@ -1,7 +1,8 @@
 import { GeneratePublicKey, RandomString } from '@core/utils';
-import { encrypt } from '@core/utils/crypto';
+import { decrypt, encrypt } from '@core/utils/crypto';
 import { ICompanyRepository } from '@infra/db/ICompanyRepository';
 import { IUserRepository } from '@infra/db/IUserRepository';
+import CompanyRepository from '@infra/db/mongodb/implementations/companyRepository';
 import { IJWTProvider } from '@infra/providers/IJWTProvider';
 
 import {
@@ -10,6 +11,7 @@ import {
   badRequest,
 } from '../../controllers/ControllerResponse';
 import User from '../../entities/User';
+import { EmailService } from '../email/EmailService';
 import {
   ICreateUserRequestDTO,
   IConfirmFirstAccesDoneDTO,
@@ -31,8 +33,26 @@ export class UserService {
     return !!(await this.userRepository.exists(email));
   }
 
-  async login(user: User, jwt: IJWTProvider): Promise<ControllerResponse> {
+  async login(
+    user: User,
+    jwt: IJWTProvider,
+    companyRepository: CompanyRepository,
+    emailService: EmailService
+  ): Promise<ControllerResponse> {
     try {
+      if (!user.firstAccessDone) {
+        this.sendEmailConfirmFirstAccessDone(
+          user,
+          jwt,
+          companyRepository,
+          emailService
+        );
+
+        return ok({
+          msg: 'Configuração inicial necessária! Acesse o seu email e clique no link.',
+        });
+      }
+
       const payload = {
         token: jwt.create(
           {
@@ -48,6 +68,32 @@ export class UserService {
       console.log(err);
       return badRequest(new Error('Invalid Params.'));
     }
+  }
+
+  async sendEmailConfirmFirstAccessDone(
+    user: User,
+    jwt: IJWTProvider,
+    companyRepository: CompanyRepository,
+    emailService: EmailService
+  ): Promise<void> {
+    const company = await companyRepository.findById(user.companyId);
+
+    const jwtConfirm = jwt.create(
+      {
+        companyId: user.companyId,
+        userId: user.email,
+      },
+      10
+    );
+
+    emailService.sendEmailConfirmCompanyUser({
+      to: {
+        email: user.email,
+        name: company.name,
+      },
+      confirmLink: `${process.env.URL_PORTAL}/auth/confirm/${jwtConfirm}`,
+      tmpPassword: decrypt(user.password),
+    });
   }
 
   async confirmFirstAccessDone(
