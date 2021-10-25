@@ -1,6 +1,11 @@
 import Bank from './Bank';
 import User from './User';
 
+export type AccessKey = {
+  publicKey: string;
+  isValid: boolean;
+};
+
 export default class Company {
   public readonly _id: any;
 
@@ -9,6 +14,10 @@ export default class Company {
   public cnpj?: string;
 
   public onboarding?: boolean;
+
+  public salt?: string;
+
+  public accessKey?: AccessKey;
 
   public status?: boolean;
 

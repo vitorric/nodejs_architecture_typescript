@@ -6,9 +6,10 @@ import { UserFactory } from '../test/factory/user';
 export const CompanySeed = async (): Promise<void> => {
   const companyRepository: CompanyRepository = new CompanyRepository();
 
+  const numberOfCompanies = 1;
   let promises = [];
 
-  for (let i = 0; i < 50; i += 1) {
+  for (let i = 0; i < numberOfCompanies; i += 1) {
     promises.push(Promise.resolve(CompanyFactory()));
   }
 
