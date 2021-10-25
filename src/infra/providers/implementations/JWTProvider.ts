@@ -17,4 +17,14 @@ export default class JWTProvider implements IJWTProvider {
       throw new Error('Failed create token');
     }
   }
+
+  decode(token: string): any {
+    try {
+      const decoded = JWT.verify(token, process.env.JWT_SECRET);
+      return decoded;
+    } catch (error) {
+      console.log('decode', error);
+      throw new Error('Failed decode token');
+    }
+  }
 }

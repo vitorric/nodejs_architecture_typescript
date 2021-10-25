@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 import {
   ControllerResponse,
   ok,
@@ -11,7 +9,7 @@ import User from '@core/entities/User';
 import { EmailService } from '@core/services/email/EmailService';
 import { UserService } from '@core/services/user/UserService';
 import { CnpjValidation } from '@core/utils';
-import { decrypt, encrypt } from '@core/utils/crypto';
+import { decrypt } from '@core/utils/crypto';
 import { ICompanyRepository } from '@infra/db/ICompanyRepository';
 import { IJWTProvider } from '@infra/providers/IJWTProvider';
 
@@ -44,10 +42,7 @@ export class CompanyService {
       }
 
       const company: Company = await this.companyRepository.create(
-        new Company({
-          ...data,
-          salt: encrypt(uuid()),
-        })
+        new Company(data)
       );
 
       const user: User = await this.userService.create({
@@ -66,7 +61,7 @@ export class CompanyService {
           companyId: company._id,
           userId: user._id,
         },
-        10
+        100
       );
 
       this.emailService.sendEmailConfirmCompanyUser({

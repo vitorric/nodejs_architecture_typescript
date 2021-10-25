@@ -5,3 +5,10 @@ export type ICreateUserRequestDTO = {
   role: Roles;
   companyId: any;
 };
+
+export type IConfirmFirstAccesDoneDTO = {
+  oldPassword: string;
+  newPassword: string;
+  token: string;
+  name: string;
+};

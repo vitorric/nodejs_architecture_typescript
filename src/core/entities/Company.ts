@@ -1,4 +1,5 @@
 import Bank from './Bank';
+import Base from './Base';
 import User from './User';
 
 export type AccessKey = {
@@ -6,7 +7,7 @@ export type AccessKey = {
   isValid: boolean;
 };
 
-export default class Company {
+export default class Company extends Base {
   public readonly _id: any;
 
   public name?: string;
@@ -14,8 +15,6 @@ export default class Company {
   public cnpj?: string;
 
   public onboarding?: boolean;
-
-  public salt?: string;
 
   public accessKey?: AccessKey;
 
@@ -41,6 +40,7 @@ export default class Company {
   ];
 
   constructor(props: Omit<Company, '_id'>) {
+    super();
     Object.assign(this, props);
   }
 }

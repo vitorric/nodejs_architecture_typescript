@@ -28,6 +28,11 @@ export default class UserRepository implements IUserRepository {
     return true;
   }
 
+  async findOne(params: any): Promise<User> {
+    const user = (await schema.findOne({ ...params }).exec()) as User;
+    return user;
+  }
+
   async findById(userId: string): Promise<User> {
     const user = (await schema.findOne({ _id: userId }).exec()) as User;
     return user;

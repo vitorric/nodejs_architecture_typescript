@@ -11,4 +11,8 @@ router.get('/get/:id', async (request, response) =>
   resJson(response, await userController.get({ ...request }))
 );
 
+router.post('/confirm/:token', async (request, response) =>
+  resJson(response, await userController.confirmFirstAccessDone({ ...request }))
+);
+
 export default router;

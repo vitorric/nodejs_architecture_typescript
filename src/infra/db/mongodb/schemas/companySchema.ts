@@ -12,7 +12,6 @@ export type CompanyDocument = Document & {
   status: boolean;
   deleted: boolean;
   onboardingDone: boolean;
-  salt: string;
   accessKey: AccessKey;
   createdAt: Date;
   updatedAt: Date;
@@ -46,10 +45,6 @@ const CompanySchema = new Schema(
     onboardingDone: {
       type: Boolean,
       default: 0,
-    },
-    salt: {
-      type: String,
-      required: true,
     },
     accessKey: {
       publicKey: {

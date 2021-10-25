@@ -1,10 +1,11 @@
+import Base from './Base';
 import Company from './Company';
 
 export enum Roles {
   Admin = 'Admin',
 }
 
-export default class User {
+export default class User extends Base {
   static readonly Roles = Roles;
 
   public readonly _id: any;
@@ -33,6 +34,7 @@ export default class User {
   public Company?: Company;
 
   constructor(props: Omit<User, '_id'>) {
+    super();
     Object.assign(this, props);
   }
 }

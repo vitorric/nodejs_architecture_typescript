@@ -28,6 +28,11 @@ export default class CompanyRepository implements ICompanyRepository {
     return true;
   }
 
+  async findOne(params: any): Promise<Company> {
+    const company = (await schema.findOne({ ...params }).exec()) as Company;
+    return company;
+  }
+
   async findById(companyId: string): Promise<Company> {
     const company = (await schema
       .findOne({ _id: companyId })
