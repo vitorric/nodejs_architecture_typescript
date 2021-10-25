@@ -19,8 +19,6 @@ export default class User {
 
   public firstAccessDone?: boolean;
 
-  public emailValidated?: boolean;
-
   public status?: boolean;
 
   public deleted?: boolean;

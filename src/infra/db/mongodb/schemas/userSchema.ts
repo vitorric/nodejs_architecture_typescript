@@ -12,7 +12,6 @@ export type UserDocument = Document & {
   status: boolean;
   deleted: boolean;
   firstAccessDone: boolean;
-  emailValidated: boolean;
   createdAt: Date;
   updatedAt: Date;
 
@@ -44,10 +43,6 @@ const UserSchema = new Schema(
       ref: 'Company',
     },
     firstAccessDone: {
-      type: Boolean,
-      default: 0,
-    },
-    emailValidated: {
       type: Boolean,
       default: 0,
     },

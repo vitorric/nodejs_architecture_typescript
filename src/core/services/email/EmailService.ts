@@ -46,7 +46,7 @@ export class EmailService {
         name: this.defaultName,
       },
       subject: 'Bem vindo(a) a plataforma Fintech',
-      body: `<p>Para começar a usar a plataforma, <a href="${data.confirmLink}">clique aqui</a> e configure o seu cadastro.</p>`,
+      body: `<p>A sua senha de acesso é: <b>${data.tmpPassword}</b></p><p>Para começar a usar a plataforma, <a href="${data.confirmLink}">clique aqui</a> e confirme o seu cadastro.</p><p><strong>A VALIDADE DESTE LINK TEM 10MIN de DURAÇÃO!</strong></p>`,
     });
 
     return created();

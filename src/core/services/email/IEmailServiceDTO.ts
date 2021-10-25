@@ -17,4 +17,5 @@ export type IEmailConfirmCompanyUserDTO = {
     email: string;
   };
   confirmLink: string;
+  tmpPassword: string;
 };

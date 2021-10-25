@@ -11,6 +11,7 @@ const config = {
 
 const urlConfigs = {
   dev: `mongodb://${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DB}`,
+  local: `mongodb://${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DB}`,
   staging: `mongodb+srv://${config.MONGO_USER}:${config.MONGO_PWD}@${config.MONGO_HOST}/${config.MONGO_DB}?retryWrites=true&w=majority`,
   production: `mongodb://${config.MONGO_USER}:${config.MONGO_PWD}@${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DB}?authSource=${config.MONGO_AUTH_SOURCE}&authMechanism=SCRAM-SHA-1`,
 };

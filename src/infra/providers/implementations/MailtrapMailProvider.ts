@@ -8,11 +8,11 @@ export default class MailtrapMailProvider implements IMailProvider {
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host: 'smtp.mailtrap.io',
-      port: 2525,
+      host: process.env.EMAIL_HOST,
+      port: parseInt(process.env.EMAIL_PORT),
       auth: {
-        user: 'b46da5240e73cc',
-        pass: '84b46267394ac9',
+        user: process.env.EMAIL_AUTH_USER,
+        pass: process.env.EMAIL_AUTH_PASS,
       },
     });
   }
