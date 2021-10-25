@@ -61,7 +61,7 @@ export class CompanyService {
           companyId: company._id,
           userId: user._id,
         },
-        100
+        10
       );
 
       this.emailService.sendEmailConfirmCompanyUser({

@@ -1,6 +1,4 @@
-import { v4 as uuid } from 'uuid';
-
-import { RandomString } from '@core/utils';
+import { GeneratePublicKey, RandomString } from '@core/utils';
 import { encrypt } from '@core/utils/crypto';
 import { ICompanyRepository } from '@infra/db/ICompanyRepository';
 import { IUserRepository } from '@infra/db/IUserRepository';
@@ -33,10 +31,19 @@ export class UserService {
     return !!(await this.userRepository.exists(email));
   }
 
-  async get(userId: string): Promise<ControllerResponse> {
+  async login(user: User, jwt: IJWTProvider): Promise<ControllerResponse> {
     try {
-      const user = await this.userRepository.findById(userId);
-      return ok(user);
+      const payload = {
+        token: jwt.create(
+          {
+            userId: user._id,
+            companyId: user.companyId,
+          },
+          60
+        ),
+      };
+
+      return ok(payload);
     } catch (err) {
       console.log(err);
       return badRequest(new Error('Invalid Params.'));
@@ -74,13 +81,17 @@ export class UserService {
         firstAccessDone: true,
       });
 
+      const publicKey = GeneratePublicKey();
+
       await companyRepository.update(company._id, {
         ...company.toJSON(),
         accessKey: {
           isValid: true,
-          publicKey: encrypt(uuid().toUpperCase()),
+          publicKey: encrypt(publicKey),
         },
       });
+
+      console.log('publicKey: ', publicKey);
 
       return ok();
     } catch (err) {

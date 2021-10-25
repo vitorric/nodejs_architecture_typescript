@@ -6,11 +6,11 @@ import path from 'path';
 
 dotenv.config({ path: path.resolve(`.env.${process.env.NODE_ENV}`) });
 
+import passport from '@infra/http/middlewares';
 import routes from '@infra/http/routes';
 
 const app = express();
-
-// import { PassportMiddleware } from './middlewares/passport'
+passport(app);
 
 app.all('*', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -22,8 +22,6 @@ app.all('*', (req, res, next) => {
   );
   next();
 });
-
-// new PassportMiddleware();
 
 app.use(
   morgan('dev'),

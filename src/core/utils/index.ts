@@ -79,4 +79,10 @@ const RandomString = (length: number): string => {
   return result;
 };
 
-export { GetMD5, CnpjValidation, RandomString };
+const GeneratePublicKey = (): string => {
+  return `${RandomString(12)}-${RandomString(4)}-${RandomString(
+    8
+  )}-${RandomString(4)}-${RandomString(4)}`;
+};
+
+export { GetMD5, CnpjValidation, RandomString, GeneratePublicKey };

@@ -14,9 +14,9 @@ const jwtProvider = new JWTProvider();
 const userService = new UserService(userRepository);
 
 export default class UserController implements IUserController {
-  async get(event: any): Promise<ControllerResponse> {
-    const { userId } = event.params;
-    return userService.get(userId);
+  async login(event: any): Promise<ControllerResponse> {
+    const { user } = event;
+    return userService.login({ ...user }, jwtProvider);
   }
 
   async confirmFirstAccessDone(event: any): Promise<ControllerResponse> {
