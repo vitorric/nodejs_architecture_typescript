@@ -9,6 +9,7 @@ import {
   ControllerResponse,
   ok,
   badRequest,
+  conflict,
 } from '../../controllers/ControllerResponse';
 import User from '../../entities/User';
 import { EmailService } from '../email/EmailService';
@@ -48,9 +49,11 @@ export class UserService {
           emailService
         );
 
-        return ok({
-          msg: 'Configuração inicial necessária! Acesse o seu email e clique no link.',
-        });
+        return conflict(
+          new Error(
+            'Configuração inicial necessária! Acesse o seu email e clique no link.'
+          )
+        );
       }
 
       const payload = {
@@ -136,8 +139,6 @@ export class UserService {
           publicKey: encrypt(publicKey),
         },
       });
-
-      console.log('publicKey: ', publicKey);
 
       return ok();
     } catch (err) {

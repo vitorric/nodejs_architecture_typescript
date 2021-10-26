@@ -11,6 +11,7 @@ export const UserFactory = async (user?: User): Promise<User> => {
       name: user?.name ?? faker.internet.userName(),
       email: user?.email ?? faker.internet.email(),
       password: user?.password ?? faker.internet.password(),
+      firstAccessDone: true,
       role: user?.role ?? 'Admin',
       ...user,
     })
